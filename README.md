@@ -27,7 +27,7 @@ Capture the output and add it as a [Github repository secret](/../../settings/se
 
 ## Azure Container Apps
 
-Make sure you have one instance already created, and then capture the name and resource group. These will be used in the workflow file.
+Make sure you have an Azure Container App already created, and then capture the name and resource group. These will be used in the workflow file.
 
 ## No need to change defaults 
 
@@ -39,7 +39,8 @@ There are a few things that might get you into a failed state when deploying:
 
 * Not using authentication for accessing the remote registry (ghcr.io in this case). Authentication is always required
 * Not using a PAT (Personal Access Token) or using a PAT that doesn't have write permissions for "packages".
-* Different port than 80 in the container. By default Azure Container Apps use 80. Update to match the container.
+* Under 'ingress' setting in the container app, ensure port matches your apllication script. For this project update to "8000". 
+* "403 Forbidden" warning requires updates to workflow permissions to read and write. Go to [Action Settings](/../../settings/actions) and scroll down to _"Workflow Permissions"_ and make sure it shows _"Read and write permissions"_ as selected.
 
 If running into trouble, check logs in the portal or use the following with the Azure CLI:
 
@@ -48,8 +49,6 @@ az containerapp logs  show  --name $CONTAINER_APP_NAME --resource-group $RESOURC
 ```
 
 Update both variables to match your environment
-
-**NOTE** Settings for Packages in your repo may need updating. Go to [Action Settings](/../../settings/actions) and scroll down to _"Workflow Permissions"_ and make sure it shows _"Read and write permissions"_ as selected, otherwise you'll see a `403 Forbidden`
 
 ## API Best Practices
 
